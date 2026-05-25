@@ -260,63 +260,63 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     // --- GAME ENGINE CYCLE LOGIC ---
 
-    fun startInvestigationGame() {
-        val state = _roomState.value
-        val playersCount = state.players.size
-        if (playersCount < 4 || playersCount > 6) {
-            playError()
-            Log.e(TAG, "Cannot start: Player count must be between 4 and 6 players")
-            return
-        }
-        playTransitionSound()
-
-val selectedCase = CaseRepository.getUniqueCase(completedCaseTitles, playersCount)
-
-// التحقق من أن القضية ليست null قبل البدء
-selectedCase?.let { case ->
-    completedCaseTitles.add(case.title)
-
-    // 2. Assign roles according to mandatory mafia count rules
-    val mafiaCount = if (playersCount == 4) 1 else 2
-    val randomizedIndices = state.players.indices.shuffled()
-    val mafiaIndices = randomizedIndices.take(mafiaCount).toSet()
-
-    val updatedPlayers = state.players.mapIndexed { index, player ->
-        val isMafia = index in mafiaIndices
-        // هنا استخدمنا 'case' بدلاً من 'selectedCase'
-        val assignedCharacter = case.characters[index]
-        player.copy(
-            isMafia = isMafia,
-            character = assignedCharacter,
-            isAlive = true,
-            isConnected = true
-        )
+ fun startInvestigationGame() {
+    val state = _roomState.value
+    val playersCount = state.players.size
+    
+    if (playersCount < 4 || playersCount > 6) {
+        playError()
+        Log.e(TAG, "Cannot start: Player count must be between 4 and 6 players")
+        return
     }
-    // ... استمر في استخدام updatedPlayers
-} ?: run {
-    // هذا الجزء اختياري: يتم تنفيذه فقط إذا كانت selectedCase تساوي null
-    // يمكنك هنا إظهار رسالة خطأ للمستخدم أو القيام بإجراء بديل
-    println("Error: No suitable case found for the given player count.")
+    
+    playTransitionSound()
+
+    // 1. Pick a unique Case
+    val selectedCase = CaseRepository.getUniqueCase(completedCaseTitles, playersCount)
+    
+    // تعريف متغير لتخزين اللاعبين المحدثين خارج الكتلة
+    var updatedPlayers = state.players
+
+    selectedCase?.let { case ->
+        completedCaseTitles.add(case.title)
+        val mafiaCount = if (playersCount == 4) 1 else 2
+        val randomizedIndices = state.players.indices.shuffled()
+        val mafiaIndices = randomizedIndices.take(mafiaCount).toSet()
+
+        // تحديث القائمة هنا
+        updatedPlayers = state.players.mapIndexed { index, player ->
+            val isMafia = index in mafiaIndices
+            val assignedCharacter = case.characters[index]
+            player.copy(
+                isMafia = isMafia,
+                character = assignedCharacter,
+                isAlive = true,
+                isConnected = true
+            )
+        }
+    } ?: run {
+        println("Error: No suitable case found for the given player count.")
+        return // خروج من الدالة إذا لم نجد قضية
+    }
+
+    // الآن يمكنك استخدام updatedPlayers و selectedCase بأمان
+    _roomState.value = state.copy(
+        phase = GamePhase.ROLE_REVEAL,
+        players = updatedPlayers, // الآن هو معرف هنا
+        currentCase = selectedCase,
+        currentEvidenceIndex = 0,
+        activePassPlayerIndex = 0,
+        rulesRevealed = false,
+        votes = emptyMap(),
+        juryVotes = emptyMap(),
+        winnerSide = ""
+    )
+
+    if (state.mode == "LAN") {
+        LanManager.broadcastStateToClients(_roomState.value)
+    }
 }
-        }
-
-        // 3. Update room state and transition to Role Reveal Screen
-        _roomState.value = state.copy(
-            phase = GamePhase.ROLE_REVEAL,
-            players = updatedPlayers,
-            currentCase = selectedCase,
-            currentEvidenceIndex = 0,
-            activePassPlayerIndex = 0,
-            rulesRevealed = false,
-            votes = emptyMap(),
-            juryVotes = emptyMap(),
-            winnerSide = ""
-        )
-
-        if (state.mode == "LAN") {
-            LanManager.broadcastStateToClients(_roomState.value)
-        }
-    }
 
     fun revealNextPassPlayerSecrets() {
         playRevealSound()
