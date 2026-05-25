@@ -96,7 +96,7 @@ fun GameNavigation(viewModel: GameViewModel) {
 // 1. SPLASH SCREEN
 // ==========================================
 @Composable
-fun ThrillerTitleComponent(fontSize: androidx.compose.ui.unit.TextUnit = 52.sp) {
+fun ThrillerTitleComponent(fontSize: androidx.compose.ui.unit.TextUnit = 70.sp) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -108,19 +108,12 @@ fun ThrillerTitleComponent(fontSize: androidx.compose.ui.unit.TextUnit = 52.sp) 
                 .background(Color(0xFF2C0A05), CircleShape)
                 .border(2.dp, GoldShine, CircleShape),
             contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.ManageSearch,
-                contentDescription = "Detective Mystery Search",
-                tint = GoldShine,
-                modifier = Modifier.size(46.dp)
-            )
-        }
+        ) 
         
         Spacer(modifier = Modifier.height(12.dp))
         
         Text(
-            text = "مَـنْ فِينا ؟",
+            text = "مين فينا ؟",
             color = GoldYell,
             fontSize = fontSize,
             fontWeight = FontWeight.Black,
@@ -131,14 +124,7 @@ fun ThrillerTitleComponent(fontSize: androidx.compose.ui.unit.TextUnit = 52.sp) 
         
         Spacer(modifier = Modifier.height(4.dp))
         
-        Text(
-            text = "WHO AMONG US?",
-            color = RedAccent.copy(alpha = 0.8f),
-            fontSize = (fontSize.value * 0.32f).sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 4.sp,
-            textAlign = TextAlign.Center
-        )
+        
     }
 }
 
@@ -164,9 +150,9 @@ fun SplashScreen() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "كل الأدلة... لا أحد بريء",
+            text = "الكل متهم .......ولكن ؟",
             color = PapyrusBgLight.copy(alpha = 0.5f),
-            fontSize = 15.sp,
+            fontSize = 30.sp,
             fontStyle = FontStyle.Italic,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Medium
@@ -273,7 +259,7 @@ fun HostLobbyScreen(viewModel: GameViewModel, state: RoomState) {
             Spacer(modifier = Modifier.height(16.dp))
             
             Text(
-                text = "المحققون المنضمون (${state.players.size} من 6):",
+                text = "اللاعبين المنضمون (${state.players.size} ) : ",
                 color = Color(0xFF4A1008),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
@@ -338,7 +324,7 @@ fun HostLobbyScreen(viewModel: GameViewModel, state: RoomState) {
                 )
             } else {
                 Text(
-                    text = "الغرفة جاهزة لبدء التحقيق الجنائي!",
+                    text = "الغرفة جاهزة لبدء القضية!",
                     color = InnocentAccent,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
@@ -369,7 +355,7 @@ fun HostLobbyScreen(viewModel: GameViewModel, state: RoomState) {
             ) {
                 Icon(Icons.Default.PlayArrow, "Start game", tint = GoldShine)
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("ابدأ الجريمة!", color = GoldShine, fontWeight = FontWeight.Bold)
+                Text("ابدأ القضية!", color = GoldShine, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -429,7 +415,7 @@ fun ClientWaitingScreen(viewModel: GameViewModel, state: RoomState) {
             Spacer(modifier = Modifier.height(12.dp))
             
             Text(
-                text = "يرجى الانتظار بينما يجمع المضيف المحققين الآخرين لبدء توزيع الأدلة الجنائية السرية...",
+                text = "يرجى الانتظار بينما يجمع المضيف اللاعبين الآخرين لبدء توزيع الأدلة الجنائية السرية...",
                 color = PapyrusText,
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
@@ -440,7 +426,7 @@ fun ClientWaitingScreen(viewModel: GameViewModel, state: RoomState) {
             Spacer(modifier = Modifier.height(16.dp))
             
             Text(
-                text = "المحققون الحاليون باللوبي (${state.players.size} من 6):",
+                text = " اللاعبون الحاليون باللوبي (${state.players.size}) : ",
                 color = Color(0xFF4A1008),
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold
@@ -525,14 +511,14 @@ fun LocalSetupScreen(viewModel: GameViewModel, state: RoomState, onBack: () -> U
             seed = 123L
         ) {
             Text(
-                text = "عدد المحققين: ${state.players.size} من 6",
+                text = "عدد اللاعبين: ${state.players.size} ",
                 color = Color(0xFF4A1008),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
             
             Text(
-                text = "4 - 6 لاعبين (1 مافيا في 4 لاعبين، 2 مافيا في 5+ لاعبين)",
+                text = "4 - 6 لاعبين (1 مجرم في 4 لاعبين، 2 مجرم في 5+ لاعبين)",
                 color = PapyrusTextSecondary,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center
@@ -669,7 +655,7 @@ fun LanJoinLobbyScreen(
 ) {
     val context = LocalContext.current
     var inputCode by remember { mutableStateOf("") }
-    var playerNameInput by remember { mutableStateOf("محقق شبكي") }
+    var playerNameInput by remember { mutableStateOf("حمادة") }
     
     Column(
         modifier = Modifier
@@ -949,7 +935,7 @@ fun MainMenuHomeScreen(
                         horizontalAlignment = Alignment.End
                     ) {
                         Text(
-                            "دخول برمز الغرفة (LAN)",
+                            "دخول برمز الغرفة (WiFi)",
                             color = Color(0xFF4A1008),
                             fontSize = 21.sp,
                             fontWeight = FontWeight.Bold
@@ -1043,9 +1029,9 @@ fun MainMenuHomeScreen(
         }
 
         Text(
-            text = "كل الأدلة... لا أحد بريء 🔍",
+            text = " !! القاعدة الاولي والاخيرة ... شك في الجميع",
             color = PapyrusBgLight.copy(alpha = 0.5f),
-            fontSize = 13.sp,
+            fontSize = 20.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 20.dp)
         )
@@ -1099,7 +1085,7 @@ fun RoleRevealScreen(viewModel: GameViewModel, state: RoomState) {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = "مرر الجهاز بعيداً عن الآخرين إلى:",
+                    text = "ادي التلفون ل : ",
                     color = PapyrusBgLight.copy(alpha = 0.8f),
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center
@@ -1156,9 +1142,9 @@ fun RoleRevealScreen(viewModel: GameViewModel, state: RoomState) {
                 // Character Metadata
                 val char = activePassPlayer.character
                 if (char != null) {
-                    Text("الاسم المستعار: ${char.name}", color = PapyrusText, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                    Text("العمر: ${char.age} سنة | المهنة: ${char.occupation}", color = PapyrusTextSecondary, fontSize = 15.sp)
-                    Text("السمات: ${char.traits}", color = PapyrusTextSecondary, fontSize = 15.sp, fontStyle = FontStyle.Italic)
+                    Text("الاسم : ${char.name}", color = PapyrusText, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                    Text("السن : ${char.age} سنة | المهنة: ${char.occupation}", color = PapyrusTextSecondary, fontSize = 15.sp)
+                    Text("الصفات : ${char.traits}", color = PapyrusTextSecondary, fontSize = 15.sp, fontStyle = FontStyle.Italic)
 
                     Spacer(modifier = Modifier.height(12.dp))
 
@@ -1183,7 +1169,7 @@ fun RoleRevealScreen(viewModel: GameViewModel, state: RoomState) {
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = if (activePassPlayer.isMafia) "أنت: المافيا الحقيقية" else "أنت: محقق بريء من الجريمة",
+                            text = if (activePassPlayer.isMafia) "أنت : المجرم الحقيقية" else "أنت : بريء من الجريمة",
                             color = Color.White,
                             fontWeight = FontWeight.ExtraBold,
                             fontSize = 20.sp
@@ -1199,7 +1185,7 @@ fun RoleRevealScreen(viewModel: GameViewModel, state: RoomState) {
                         fontSize = 16.sp
                     )
                     Text(
-                        text = if (activePassPlayer.isMafia) char.hiddenMotive else "اجمع الأدلة واحمي صحابك الأبرياء من تضليل المافيا.",
+                        text = if (activePassPlayer.isMafia) char.hiddenMotive else "انت برئ حاول تكتشف المجرم الحقيقي !!",
                         color = PapyrusText,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center
@@ -1224,7 +1210,7 @@ fun RoleRevealScreen(viewModel: GameViewModel, state: RoomState) {
                 contentPadding = PaddingValues(14.dp)
             ) {
                 Text(
-                    text = if (state.activePassPlayerIndex < state.players.size - 1) "خبي ملفك وهات اللي بعده" else "يلا ندخل على تفاصيل القضية والمؤامرة",
+                    text = if (state.activePassPlayerIndex < state.players.size - 1) "خبي ملفك وهات اللي بعده" else "يلا ندخل على تفاصيل القضية",
                     color = GoldShine,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
@@ -1249,7 +1235,7 @@ fun CaseIntroScreen(viewModel: GameViewModel, state: RoomState) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        ParchmentHeaderBanner(text = "تفاصيل الجريمة والمؤامرة")
+        ParchmentHeaderBanner(text = "تفاصيل الجريمة")
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -1319,7 +1305,7 @@ fun CaseIntroScreen(viewModel: GameViewModel, state: RoomState) {
 
             // Profiles list
             Text(
-                text = "المشتبه فيهم بالأقدام بالموقع:",
+                text = " المشتبه فيهم : ",
                 color = DarkWoodButton,
                 fontWeight = FontWeight.Bold,
                 fontSize = 13.sp
@@ -1467,30 +1453,13 @@ fun EvidenceScreen(viewModel: GameViewModel, state: RoomState) {
                 ) {
                     Icon(Icons.Default.Warning, "Clues Alert", tint = Color.Black)
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("عرض تلميح المفتش المساعد 💡", color = Color.Black, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("عرض تلميح  💡", color = Color.Black, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
             // Suspicion Slider scale
-            Text(
-                text = "نسبة شك الفريق بالضحايا: ${(localSuspicionValue * 100).toInt()}%",
-                color = PapyrusTextSecondary,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold
-            )
-            
-            Slider(
-                value = localSuspicionValue,
-                onValueChange = { localSuspicionValue = it },
-                colors = SliderDefaults.colors(
-                    thumbColor = RedAccent,
-                    activeTrackColor = RedAccent,
-                    inactiveTrackColor = Color(0x1F2C1E14)
-                ),
-                modifier = Modifier.fillMaxWidth().testTag("suspicion_slider")
-            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -1700,7 +1669,7 @@ fun VotingScreen(viewModel: GameViewModel, state: RoomState) {
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "باقي اللعيبة يرفعوا إيديهم وميبصوش للجهاز عشان التصويت سري!",
+                        text = "فكر قبل ما تصوت .....شغل دماغك !!!",
                         color = Color.LightGray,
                         fontSize = 17.sp,
                         textAlign = TextAlign.Center,
@@ -1751,7 +1720,7 @@ fun VotingScreen(viewModel: GameViewModel, state: RoomState) {
                 )
                 
                 Text(
-                    text = "اختار الشخص اللي شاكك فيه تفتكر هو المافيا:",
+                    text = "اختار الشخص اللي شاكك فيه تفتكر هو المجرم:",
                     color = PapyrusTextSecondary,
                     fontSize = 15.sp,
                     textAlign = TextAlign.Center
@@ -1846,7 +1815,7 @@ fun VotingScreen(viewModel: GameViewModel, state: RoomState) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    ParchmentHeaderBanner(text = "أنت برة اللعب دلوقتي 💀")
+                    ParchmentHeaderBanner(text = " أنت برة اللعب دلوقتي 💀")
                     Spacer(modifier = Modifier.height(24.dp))
                     Text(
                         text = "مبروك تصفيتك! استنى تصويت باقي اللعيبة...",
@@ -1949,7 +1918,7 @@ fun VotingScreen(viewModel: GameViewModel, state: RoomState) {
                     )
 
                     Text(
-                        text = "اختار الشخص اللي شاكك فيه تفتكر هو المافيا:",
+                        text = "اختار الشخص اللي شاكك فيه تفتكر هو المجرم:",
                         color = PapyrusTextSecondary,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center
@@ -2059,7 +2028,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                     ParchmentHeaderBanner(text = "مرر الموبايل")
                     Spacer(modifier = Modifier.height(30.dp))
                     Text(
-                        text = "هات الموبايل ووريه للمحلف/ ${juryVoter.name}",
+                        text = "هات الموبايل ووريه ل /  ${juryVoter.name}",
                         color = PapyrusBgLight,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
@@ -2067,7 +2036,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "باقي اللعيبة يرفعوا إيديهم! تصويتك هيكون سري ومصير الباقيين في إيدك.",
+                        text = "تصويتك هيكون مهم ومصير الباقيين في إيدك .... متبقاش غبي !!",
                         color = Color.LightGray,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center,
@@ -2082,7 +2051,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                             .fillMaxWidth()
                             .height(56.dp)
                     ) {
-                        Text("ادخل صوّت كـ محلف", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text("ادخل صوّت ", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -2121,7 +2090,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "العدالة تضع الكلمة في أيديكم!",
+                    text = "!!! لا تقلقوا ولكن احذروا !!!",
                     color = Color(0xFF6E1D10),
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 22.sp,
@@ -2129,7 +2098,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                 )
 
                 Text(
-                    text = "بما أنه لم يتبق سوى محققين اثنين، يعود المحلفون الذين تم تصفيتهم سابقاً للإجماع والتصويت لإثبات الإدانة النهائية على المافيا.",
+                    text = "بما أنه لم يتبق سوى لاعبين اثنين، يعود اللاعبين الذين تم تصفيتهم سابقاً للإجماع والتصويت لإثبات الإدانة النهائية على المجرم.",
                     color = PapyrusTextSecondary,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center
@@ -2139,7 +2108,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
 
                 if (juryVoter != null) {
                     Text(
-                        text = "دور المحلف العادل: ${juryVoter.name}",
+                        text = "دور اللاعب : ${juryVoter.name}",
                         color = RedAccent,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
@@ -2182,7 +2151,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                     }
                 } else {
                     Text(
-                        text = "تم جمع كافة استنتاجات المحلفين بنجاح. سنعلن النتيجة الآن!",
+                        text = "تم جمع كافة استنتاجات اللاعبين بنجاح. سنعلن النتيجة الآن!",
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
@@ -2219,7 +2188,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "مصيرك وصاحبك الأخير بين إيدين اللعيبة المقصية! مين هيتبرأ ومين هيدان؟ تفتكر هيختاروا صح؟",
+                        text = "مصيرك وصاحبك الأخير بين إيدين  اللاعبين اللي خرجوا ! مين هيتبرأ ومين هيدان؟ تفتكر هيختاروا صح؟",
                         color = Color.LightGray,
                         fontSize = 16.sp,
                         textAlign = TextAlign.Center
@@ -2230,7 +2199,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                         ParchmentHeaderBanner(text = "تم تسجيل صوتك للمحلفين! ⚖️")
                         Spacer(modifier = Modifier.height(24.dp))
                         Text(
-                            text = "مستنيين باقي المحلفين عشان تظهر النتيجة...",
+                            text = "مستنيين باقي اللاعبين عشان تظهر النتيجة...",
                             color = PapyrusBgLight,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
@@ -2244,7 +2213,7 @@ fun JuryScreen(viewModel: GameViewModel, state: RoomState) {
                             seed = 88L
                         ) {
                             Text(
-                                text = "اضغط إدانة على المافيا الحقيقية عشان تحسم الجريمة وترجع حق الضحية!",
+                                text = "اضغط إدانة على المجرم الحقيقي عشان تحسم الجريمة وترجع حق الضحية!",
                                 color = Color(0xFF6E1D10),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp,
@@ -2336,7 +2305,7 @@ fun EndgameScreen(viewModel: GameViewModel, state: RoomState) {
 
             // BIG WINNER BANNER
             Text(
-                text = if (isInnocentsWinner) "انتصار العدالة والأبرياء!" else "المافيا انتصرت وضحكت على الكل!",
+                text = if (isInnocentsWinner) "!!الف مبرووك عرفتوا تطلعوا المجرم الفاشل!!" else "!المجرم انتصر وضحك على الكل!",
                 color = if (isInnocentsWinner) GreenAccent else RedAccent,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.ExtraBold,
@@ -2361,9 +2330,9 @@ fun EndgameScreen(viewModel: GameViewModel, state: RoomState) {
                     item {
                         Text(
                             text = if (isInnocentsWinner) {
-                                "الأبرياء عرفوا يجمعوا الأدلة ويكشفوا اللعبة الصح، والمافيا وقعت في شر أعمالها والعدالة كسبت الجولة الحالية."
+                                "الأبرياء عرفوا يجمعوا الأدلة ويكشفوا اللعبة الصح، والمجرم وقع في شر أعماله ."
                             } else {
-                                "المافيا عرفت تضحك على الكل وتثبت تهم باطلة على الأبرياء، وخرجت من قضية الجريمة زي الشعرة من العجين."
+                                "المجرم عرف يضحك على الكل ويثبت تهم باطلة على الأبرياء، وخرج من القضية زي الشعرة من العجين."
                             },
                             color = PapyrusText,
                             fontSize = 16.sp,
@@ -2377,7 +2346,7 @@ fun EndgameScreen(viewModel: GameViewModel, state: RoomState) {
 
                         // --- CRIMINAL DRAMATIC REVEAL ---
                         Text(
-                            text = "الهوية الحقيقية للمافيا:",
+                            text = "الهوية الحقيقية للمجرم:",
                             color = Color(0xFF4A1008),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
@@ -2472,7 +2441,7 @@ fun EndgameScreen(viewModel: GameViewModel, state: RoomState) {
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(
-                                    text = if (p.isMafia) "المافيا" else "بريء ومحقق",
+                                    text = if (p.isMafia) "مجرم" else "بريء ",
                                     color = if (p.isMafia) RedAccent else InnocentAccent,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 15.sp
@@ -2652,9 +2621,9 @@ fun SettingsDialog(
                         // Game Rules
                         Text("قوانين اللعبة الأساسية:", color = Color(0xFF4A1008), fontWeight = FontWeight.Bold, fontSize = 18.sp)
                         Text(
-                            text = "1. اللعبة تدعم من 4 لـ 8 لاعبين.\n" +
-                                   "2. لو عدد المحققين 4، بيكون فيه مافيا واحدة بس؛ ولو أكتر من كدة بيتم تعيين 2 مافيا تلقائياً لدعم التحدي والمنافسة.\n" +
-                                   "3. في نهاية الجولة لو اتبقى اتنين مشتبه بيهم بس عايشين، بيتلغي تصويت الاقتراع المباشر واللعيبة المقصية بترجع تلقائياً كـ (هيئة المحلفين) لحسم القرار النهائي وإدانة المافيا الحقيقية.",
+                            text = "1. اللعبة تدعم من 4 لـ 6 لاعبين.\n" +
+                                   "2. لو عدد اللاعبين 4، بيكون فيه مجرم واحدة بس؛ ولو أكتر من كدة بيتم تعيين 2 مجرم تلقائياً لدعم التحدي والمنافسة.\n" +
+                                   "3. في نهاية الجولة لو اتبقى اتنين مشتبه بيهم بس عايشين، بيتلغي تصويت الاقتراع المباشر واللعيبة اللي خرجوا بترجع تلقائياً كـ (هيئة المحلفين) لحسم القرار النهائي وإدانة المجرم الحقيقية.",
                             color = PapyrusTextSecondary,
                             fontSize = 15.sp,
                             lineHeight = 22.sp
@@ -2728,7 +2697,7 @@ fun VoteResultScreen(viewModel: GameViewModel, state: RoomState) {
 
                     Spacer(modifier = Modifier.height(24.dp))
                     Text(
-                        text = "كشف الأصوات العام المباشر والشفاف: 🗳️",
+                        text = "كشف الأصوات العامة  : 🗳️",
                         color = Color(0xFF6E1B10),
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
