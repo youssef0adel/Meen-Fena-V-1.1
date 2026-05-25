@@ -1,0 +1,6 @@
+{
+  "name": "مين فينا؟",
+  "description": "مين فينا؟ (Who Among Us?) is a premium dark-themed social deduction mystery game with full-fledged LAN local multiplayer and Pass-and-Play offline modes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
