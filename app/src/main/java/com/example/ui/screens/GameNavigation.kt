@@ -96,22 +96,13 @@ fun GameNavigation(viewModel: GameViewModel) {
 // 1. SPLASH SCREEN
 // ==========================================
 @Composable
-fun ThrillerTitleComponent(fontSize: androidx.compose.ui.unit.TextUnit = 70.sp) {
+fun ThrillerTitleComponent(fontSize: androidx.compose.ui.unit.TextUnit = 100.sp) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.padding(16.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .size(76.dp)
-                .background(Color(0xFF2C0A05), CircleShape)
-                .border(2.dp, GoldShine, CircleShape),
-            contentAlignment = Alignment.Center
-        ) 
-        {
-            
-        }
+        
         
         Spacer(modifier = Modifier.height(12.dp))
         
