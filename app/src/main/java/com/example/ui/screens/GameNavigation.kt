@@ -109,6 +109,9 @@ fun ThrillerTitleComponent(fontSize: androidx.compose.ui.unit.TextUnit = 70.sp) 
                 .border(2.dp, GoldShine, CircleShape),
             contentAlignment = Alignment.Center
         ) 
+        {
+            
+        }
         
         Spacer(modifier = Modifier.height(12.dp))
         
