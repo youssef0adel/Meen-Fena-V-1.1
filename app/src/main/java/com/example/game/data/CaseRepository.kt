@@ -1611,7 +1611,8 @@ Case(
         )
     }
 
-   fun getUniqueCase(completedCaseTitles: Set<String>, playerCount: Int): Case? {
+   fun getUniqueCase(completedCaseTitles: Set<String>, playerCount: Int): Case? 
+   {
     val available = cachedCases.filter { it.title !in completedCaseTitles }
     val pool = if (available.isNotEmpty()) available else cachedCases
     
@@ -1619,11 +1620,13 @@ Case(
     val matchingCases = pool.filter { it.characters.size == playerCount }
     
     // إذا وجدت قضايا مطابقة، اختر واحدة عشوائية
-    return if (matchingCases.isNotEmpty()) {
+    return if (matchingCases.isNotEmpty()) 
+    {
         matchingCases.random(Random(System.currentTimeMillis()))
-    } else {
-        // إذا لم توجد قضية بهذا العدد، يمكن إرجاع null أو أي قضية عشوائية حسب متطلبات اللعبة
-        // ولكن الأفضل إرجاع null ليتعامل معها المتصل
+    } 
+    else 
+    {    
         null
     }
+}
 }

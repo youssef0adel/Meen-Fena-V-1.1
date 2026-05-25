@@ -270,25 +270,34 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         }
         playTransitionSound()
 
-        // 1. Pick a unique Case
-        val selectedCase = CaseRepository.getUniqueCase(completedCaseTitles, playersCount)
-        completedCaseTitles.add(selectedCase.title)
+val selectedCase = CaseRepository.getUniqueCase(completedCaseTitles, playersCount)
 
-        // 2. Assign roles according to mandatory mafia count rules
-        // 1 mafia if exactly 4 players. 2 mafia if players >= 5.
-        val mafiaCount = if (playersCount == 4) 1 else 2
-        val randomizedIndices = state.players.indices.shuffled()
-        val mafiaIndices = randomizedIndices.take(mafiaCount).toSet()
+// التحقق من أن القضية ليست null قبل البدء
+selectedCase?.let { case ->
+    completedCaseTitles.add(case.title)
 
-        val updatedPlayers = state.players.mapIndexed { index, player ->
-            val isMafia = index in mafiaIndices
-            val assignedCharacter = selectedCase.characters[index]
-            player.copy(
-                isMafia = isMafia,
-                character = assignedCharacter,
-                isAlive = true,
-                isConnected = true
-            )
+    // 2. Assign roles according to mandatory mafia count rules
+    val mafiaCount = if (playersCount == 4) 1 else 2
+    val randomizedIndices = state.players.indices.shuffled()
+    val mafiaIndices = randomizedIndices.take(mafiaCount).toSet()
+
+    val updatedPlayers = state.players.mapIndexed { index, player ->
+        val isMafia = index in mafiaIndices
+        // هنا استخدمنا 'case' بدلاً من 'selectedCase'
+        val assignedCharacter = case.characters[index]
+        player.copy(
+            isMafia = isMafia,
+            character = assignedCharacter,
+            isAlive = true,
+            isConnected = true
+        )
+    }
+    // ... استمر في استخدام updatedPlayers
+} ?: run {
+    // هذا الجزء اختياري: يتم تنفيذه فقط إذا كانت selectedCase تساوي null
+    // يمكنك هنا إظهار رسالة خطأ للمستخدم أو القيام بإجراء بديل
+    println("Error: No suitable case found for the given player count.")
+}
         }
 
         // 3. Update room state and transition to Role Reveal Screen
