@@ -2,7 +2,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ "main" ] # سيعمل الـ Build تلقائياً عند رفع الكود لفرع main
+    branches: [ "main" ]
 
 jobs:
   build:
