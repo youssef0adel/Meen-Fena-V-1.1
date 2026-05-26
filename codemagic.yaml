@@ -1,15 +1,45 @@
 workflows:
-  android-debug:
-    name: Build Android Debug APK
+  android-build:
+    name: Build Android
+    max_build_duration: 60
     environment:
+      flutter: stable
       java: 17
-      sdk: "33"
     scripts:
-      - chmod +x gradlew
-      - ./gradlew assembleDebug
+      - name: Download Handjet font
+        script: |
+          mkdir -p assets/fonts
+          mkdir -p assets/images
+          mkdir -p assets/data
+          
+          curl -L -o assets/fonts/Handjet-Variable.ttf \
+            "https://github.com/google/fonts/raw/main/ofl/handjet/Handjet%5Bwght%5D.ttf"
+          
+          echo "Font downloaded!"
+      
+      - name: Create app icons
+        script: |
+          mkdir -p android/app/src/main/res/mipmap-{hdpi,mdpi,xhdpi,xxhdpi,xxxhdpi}
+          python3 -c "
+          import struct, zlib
+          def png(w,h,c):
+              def ch(t,d):
+                  ct=t+d
+                  return struct.pack('>I',len(d))+ct+struct.pack('>I',zlib.crc32(ct)&0xffffffff)
+              hdr=b'\x89PNG\r\n\x1a\n'
+              ih=ch(b'IHDR',struct.pack('>IIBBBBB',w,h,8,2,0,0,0))
+              raw=b''
+              for y in range(h): raw+=b'\x00'+bytes(c)*w
+              return hdr+ih+ch(b'IDAT',zlib.compress(raw))+ch(b'IEND',b'')
+          for d,s in {'mdpi':48,'hdpi':72,'xhdpi':96,'xxhdpi':144,'xxxhdpi':192}.items():
+              with open(f'android/app/src/main/res/mipmap-{d}/ic_launcher.png','wb') as f:
+                  f.write(png(s,s,(139,0,0)))
+          "
+      
+      - name: Build app
+        script: |
+          flutter clean
+          flutter pub get
+          flutter build appbundle --debug --android-skip-build-dependency-validation
     artifacts:
-      - app/build/outputs/apk/debug/*.apk
-    cache:
-      - ~/.gradle/caches
-      - ~/.m2/repository
-      - ~/.konan
+      - build/app/outputs/bundle/debug/app-debug.aab
