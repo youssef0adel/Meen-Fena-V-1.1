@@ -6,3 +6,6 @@ plugins {
   alias(libs.plugins.roborazzi) apply false
   alias(libs.plugins.secrets) apply false
 }
+dependencies {
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0'
+}
